@@ -1,0 +1,17 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 360px); /* 3 sütun, her biri 360px */
+  justify-content: center; /* tüm grid yapısını yatayda ortala */
+  gap: 24px;
+
+  list-style-type: none;
+  margin: 20px auto;
+  padding: 0;
+}
+
+.gallery-image {
+  width: 360px;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}

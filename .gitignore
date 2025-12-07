@@ -24,3 +24,5 @@ TestResults.xml
 *.md
 #git ignore files
 .gitignore
+
+*.json

@@ -1,7 +1,3 @@
-import * as basicLightbox from "basiclightbox";
-
-const basicLightbox = require("basiclightbox");
-
 const images = [
   {
     preview: "<https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg>",
@@ -49,18 +45,39 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
+const gallery = document.querySelector(".gallery");
 for (let image of images) {
-  const [preview, original, description] = image;
-  const image = document.querySelector("gallery-image");
+  let { preview, original, description } = image;
+  preview = preview.replace(/[<>]/g, "");
+  original = original.replace(/[<>]/g, "");
+  const template = `<li class="gallery-item">
+       <a class="gallery-link"
+        href="${original}"> 
+        <img class="gallery-image"
+         src="${preview}" 
+         data-source="${original}"
+          alt="${description}" /> </a> </li>`;
+  gallery.innerHTML += template;
 }
-for (let i = 0; i < 50; i++) {
-  const buton = document.createElement("button");
-  const color = getRandomHexColor();
-  buton.type = "button";
-  buton.style.width = 50 + "px";
-  buton.style.height = 30 + "px";
-  buton.dataset.color = color;
-  buton.style.backgroundColor = color;
-  items.push(buton);
-  colorbox.append(buton);
-}
+gallery.addEventListener("click", (event) => {
+  event.preventDefault();
+  const clicked = event.target;
+  if (!clicked.classList.contains("gallery-image")) {
+    return;
+  }
+  const largeImageURL = clicked.dataset.source;
+  const instance = basicLightbox.create(`<img src="${largeImageURL}" width="900" />`, {
+    closable: false,
+    onShow(instance) {
+      const handleEsc = (e) => {
+        if (e.key === "Escape") instance.close();
+      };
+      document.addEventListener("keydown", handleEsc);
+      instance._handleEsc = handleEsc;
+    },
+    onClose(instance) {
+      document.removeEventListener("keydown", instance._handleEsc);
+    },
+  });
+  instance.show(); // <-- EKLEMEK ZORUNDA!
+});
