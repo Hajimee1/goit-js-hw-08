@@ -1,5 +1,8 @@
-# node_modules klasörü
+# node_modules klasörünü tamamen yok say
 node_modules/
 
 # tüm JSON dosyaları
 *.json
+
+# tüm Markdown (.md) dosyaları
+*.md
